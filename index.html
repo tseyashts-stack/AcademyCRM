@@ -3,185 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Нова заявка</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Результат тренування</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #0f0f0f; --surface: #1a1a1a; --surface2: #222222;
     --border: #2e2e2e; --accent: #4f8ef7; --accent-dim: rgba(79,142,247,0.12);
-    --text: #f0f0f0; --muted: #888; --success: #3ecf8e; --error: #f56565;
+    --text: #f0f0f0; --muted: #888; --success: #3ecf8e; --error: #f56565; --warning: #f6ad55;
   }
-  body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 1rem 1rem 2rem; }
+  body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 1.5rem 1rem 2rem; }
+
   .header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-  .header-icon { width: 36px; height: 36px; background: var(--accent-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .header h1 { font-size: 16px; font-weight: 600; color: var(--text); }
-  .header p { font-size: 12px; color: var(--muted); margin-top: 1px; }
-  .phone-display { background: var(--accent-dim); border: 1px solid rgba(79,142,247,0.3); border-radius: 12px; padding: 12px 16px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
-  .phone-display span { font-size: 18px; }
-  .phone-display p { font-size: 15px; font-weight: 600; color: var(--accent); letter-spacing: 0.5px; }
-  .field { margin-bottom: 1rem; }
-  label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
-  input, select, textarea { width: 100%; padding: 11px 14px; font-size: 15px; font-family: 'Manrope', sans-serif; font-weight: 500; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 10px; outline: none; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
-  input:focus, select:focus, textarea:focus { border-color: var(--accent); background: var(--surface2); }
-  input::placeholder, textarea::placeholder { color: var(--muted); font-weight: 400; }
-  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-  select option { background: #1a1a1a; color: #f0f0f0; }
-  textarea { resize: none; height: 80px; line-height: 1.5; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .btn { width: 100%; padding: 14px; font-size: 15px; font-weight: 600; font-family: 'Manrope', sans-serif; background: var(--accent); color: #fff; border: none; border-radius: 12px; cursor: pointer; margin-top: 1rem; transition: opacity 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn:active { transform: scale(0.98); opacity: 0.9; }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--success); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap; }
+  .header-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .header h1 { font-size: 16px; font-weight: 700; }
+  .header p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 1rem; }
+  .card-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; }
+  .card-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+  .card-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .card-value { font-size: 14px; font-weight: 600; text-align: right; }
+
+  .section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+
+  .btn { width: 100%; padding: 15px; font-size: 15px; font-weight: 700; font-family: 'Manrope', sans-serif; border: none; border-radius: 14px; cursor: pointer; margin-bottom: 10px; transition: opacity 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn:active { transform: scale(0.97); opacity: 0.85; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-danger  { background: var(--error);   color: #fff; }
+  .btn-warning { background: var(--warning); color: #fff; }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+  .reasons { display: none; margin-top: 0.5rem; }
+  .reasons.show { display: block; }
+  .reason-btn { width: 100%; padding: 13px 16px; font-size: 14px; font-weight: 600; font-family: 'Manrope', sans-serif; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; margin-bottom: 8px; text-align: left; transition: border-color 0.2s, background 0.2s; }
+  .reason-btn:active { background: var(--surface2); border-color: var(--error); }
+
+  .done-screen { display: none; text-align: center; padding: 3rem 1rem; }
+  .done-screen.show { display: block; }
+  .done-icon { font-size: 56px; margin-bottom: 1rem; }
+  .done-screen h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .done-screen p { font-size: 14px; color: var(--muted); }
+
+  .main-screen { }
+  .loading { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; }
+
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--error); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.error { background: var(--error); }
-  .required::after { content: ' *'; color: var(--error); }
-  input.invalid, select.invalid { border-color: var(--error); }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-icon">📞</div>
-  <div>
-    <h1 id="phoneTitle">Завантаження...</h1>
-    <p>Нова заявка</p>
+<div id="loadingScreen" class="loading">⏳ Завантаження...</div>
+
+<div id="mainScreen" class="main-screen" style="display:none">
+  <div class="header">
+    <div class="header-icon">⚽</div>
+    <div>
+      <h1>Результат пробного</h1>
+      <p id="headerDate">—</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="card-row">
+      <span class="card-label">👤 Дитина</span>
+      <span class="card-value" id="infoName">—</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">📅 Рік народження</span>
+      <span class="card-value" id="infoBirth">—</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">📞 Телефон</span>
+      <span class="card-value" id="infoPhone">—</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">👥 Група</span>
+      <span class="card-value" id="infoGroup">—</span>
+    </div>
+  </div>
+
+  <p class="section-title">Оберіть результат</p>
+
+  <button class="btn btn-success" onclick="handleResult('will')">✅ Буде ходити</button>
+  <button class="btn btn-danger"  onclick="showReasons()">❌ Не буде ходити</button>
+  <button class="btn btn-warning" onclick="handleResult('no')">🚫 Не прийшов</button>
+
+  <div class="reasons" id="reasonsBlock">
+    <p class="section-title" style="margin-top:0.5rem">Причина відмови</p>
+    <button class="reason-btn" onclick="handleResult('not', 'Не підходить локація')">📍 Не підходить локація</button>
+    <button class="reason-btn" onclick="handleResult('not', 'Не підходить рівень')">⚽️ Не підходить рівень</button>
+    <button class="reason-btn" onclick="handleResult('not', 'Дорого')">💰 Дорого</button>
+    <button class="reason-btn" onclick="handleResult('not', 'Інша причина')">❓ Інша причина</button>
   </div>
 </div>
 
-<div class="phone-display">
-  <span>📱</span>
-  <p id="phoneNum">—</p>
+<div id="doneScreen" class="done-screen">
+  <div class="done-icon" id="doneIcon">✅</div>
+  <h2 id="doneTitle">Записано!</h2>
+  <p id="doneText">Результат збережено в таблицю</p>
 </div>
-
-<div class="field">
-  <label class="required">Ім'я дитини</label>
-  <input type="text" id="child_full_name" placeholder="Прізвище Ім'я">
-</div>
-
-<div class="row2">
-  <div class="field">
-    <label>Рік народження</label>
-    <input type="number" id="child_birth_year" placeholder="2018" min="2000" max="2024">
-  </div>
-  <div class="field">
-    <label>Реакція</label>
-    <select id="category">
-      <option value="">Оберіть...</option>
-      <option value="Позитивна">Позитивна</option>
-      <option value="Негативна">Негативна</option>
-    </select>
-  </div>
-</div>
-
-<div class="field">
-  <label class="required">Група</label>
-  <select id="group">
-    <option value="">Оберіть групу...</option>
-    <option>Thuram</option>
-    <option>Vlahovic</option>
-    <option>Locatelli/Yildiz</option>
-    <option>Gatti</option>
-    <option>Bremer</option>
-    <option>Midgard</option>
-  </select>
-</div>
-
-<div class="row2">
-  <div class="field">
-    <label>Дата пробного</label>
-    <input type="date" id="trial_date">
-  </div>
-  <div class="field">
-    <label class="required">Статус</label>
-    <select id="status">
-      <option value="Пробне">Пробне</option>
-      <option value="Оплата">Оплата</option>
-      <option value="Навчання">Навчання</option>
-    </select>
-  </div>
-</div>
-
-<div class="field">
-  <label>Коментар</label>
-  <textarea id="comment" placeholder="Додаткова інформація..."></textarea>
-</div>
-
-<button class="btn" id="submitBtn" onclick="submitForm()">
-  ✓ Заповнити
-</button>
 
 <div class="toast" id="toast"></div>
 
 <script>
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoB-D7s3PROlFtZ_zsvxbJuLhSYQd6vdae8SNVCt8Gwaf-hc6-gKZhdEivBPsppJI22A/exec';
 
-  const tg = window.Telegram && window.Telegram.WebApp;
-  if (tg) { tg.ready(); tg.expand(); }
+  const params   = new URLSearchParams(window.location.search);
+  const rowIdx   = params.get('row');
+  const sheetName = params.get('sheet') || 'Заявки';
 
-  const params = new URLSearchParams(window.location.search);
-  const phone = params.get('phone') || (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || '';
+  let rowData = null;
+  let submitted = false;
 
-  document.getElementById('phoneTitle').textContent = phone || 'Новий клієнт';
-  document.getElementById('phoneNum').textContent = phone || 'Номер не передано';
-
-  function showToast(msg, isError) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast' + (isError ? ' error' : '') + ' show';
-    setTimeout(() => { t.className = 'toast'; }, 3000);
-  }
-
-  function validate() {
-    let ok = true;
-    ['child_full_name', 'group', 'status'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) { el.classList.add('invalid'); ok = false; }
-      else { el.classList.remove('invalid'); }
-    });
-    return ok;
-  }
-
-  async function submitForm() {
-    if (!validate()) { showToast("Заповніть обов'язкові поля", true); return; }
-
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Відправляємо...';
-
-    const data = {
-      action: 'addRequest',
-      phone: phone,
-      child_full_name: document.getElementById('child_full_name').value.trim(),
-      child_birth_year: document.getElementById('child_birth_year').value,
-      category: document.getElementById('category').value,
-      group: document.getElementById('group').value,
-      trial_date: document.getElementById('trial_date').value,
-      status: document.getElementById('status').value,
-      comment: document.getElementById('comment').value.trim()
-    };
-
+  async function loadData() {
+    if (!rowIdx) {
+      document.getElementById('loadingScreen').textContent = '❌ Невірне посилання';
+      return;
+    }
     try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify(data)
-      });
-
-      showToast('✓ Заявку збережено!');
-      setTimeout(() => { if (tg) tg.close(); }, 1500);
-
-    } catch (err) {
-      showToast('Помилка. Спробуйте ще раз.', true);
-      btn.disabled = false;
-      btn.textContent = '✓ Заповнити';
+      const res = await fetch(`${SCRIPT_URL}?action=getRow&row=${rowIdx}&sheet=${encodeURIComponent(sheetName)}`);
+      const json = await res.json();
+      if (!json.success) throw new Error();
+      rowData = json.data;
+      renderData();
+    } catch (e) {
+      document.getElementById('loadingScreen').textContent = '❌ Помилка завантаження';
     }
   }
 
-  document.querySelectorAll('input, select').forEach(el => {
-    el.addEventListener('input', () => el.classList.remove('invalid'));
-  });
+  function renderData() {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('mainScreen').style.display = 'block';
+
+    document.getElementById('infoName').textContent  = rowData['child_full_name'] || '—';
+    document.getElementById('infoBirth').textContent = rowData['child_birth_year'] || '—';
+    document.getElementById('infoPhone').textContent = rowData['phone'] || '—';
+    document.getElementById('infoGroup').textContent = rowData['group'] || '—';
+
+    const date = rowData['Дата пробного тренування'] || rowData['trial_date'] || '';
+    document.getElementById('headerDate').textContent = date ? `Тренування: ${date}` : 'Пробне тренування';
+  }
+
+  function showReasons() {
+    document.getElementById('reasonsBlock').classList.toggle('show');
+  }
+
+  async function handleResult(action, reason) {
+    if (submitted) return;
+    submitted = true;
+
+    disableAllButtons();
+
+    try {
+      await fetch(`${SCRIPT_URL}?action=setResult&row=${rowIdx}&sheet=${encodeURIComponent(sheetName)}&result=${action}&reason=${encodeURIComponent(reason || '')}`, {
+        mode: 'no-cors'
+      });
+      showDone(action, reason);
+    } catch (e) {
+      submitted = false;
+      enableAllButtons();
+      showToast('Помилка. Спробуйте ще раз.');
+    }
+  }
+
+  function showDone(action, reason) {
+    document.getElementById('mainScreen').style.display = 'none';
+    const done = document.getElementById('doneScreen');
+    done.classList.add('show');
+
+    const icons  = { will: '✅', not: '❌', no: '🚫' };
+    const titles = { will: 'Буде ходити!', not: 'Не буде ходити', no: 'Не прийшов' };
+    const texts  = {
+      will: 'Клієнт записаний як активний',
+      not:  reason ? `Причина: ${reason}` : 'Результат збережено',
+      no:   'Надіслано сповіщення менеджеру'
+    };
+
+    document.getElementById('doneIcon').textContent  = icons[action];
+    document.getElementById('doneTitle').textContent = titles[action];
+    document.getElementById('doneText').textContent  = texts[action];
+  }
+
+  function disableAllButtons() {
+    document.querySelectorAll('.btn, .reason-btn').forEach(b => b.disabled = true);
+  }
+  function enableAllButtons() {
+    document.querySelectorAll('.btn, .reason-btn').forEach(b => b.disabled = false);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  loadData();
 </script>
 </body>
 </html>
